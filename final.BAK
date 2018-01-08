@@ -1,0 +1,713 @@
+#include<iostream.h>
+#include<conio.h>
+#include<string.h>
+
+class university
+{
+  char *uname;
+  public:
+  university()
+  {strcpy(uname,"JAYPEE INSTITUTE");
+  }
+};
+//increment 1
+class academic :public university
+{
+
+  public:
+    academic()
+    {
+    }
+};
+//association
+// 1.. *
+class department
+{
+
+    char dname[20];
+    academic *aca;
+    public:
+    department()
+    {
+	strcpy(dname,"");
+    }
+   void  setdep(char n[])
+    {
+       strcpy(dname,n);
+
+    }
+    char* getdep()
+    {
+	return dname;
+     }
+};
+
+class sports:public university    //inheritanc from university
+{
+  char *mentor_name;
+  int size;
+  //void availability();
+
+};
+
+class hub;
+
+
+
+
+
+class student
+{
+   char sname[20];
+   int enroll;
+   float cgpa;
+    hub *obj;
+   department dep;
+   public:
+   student()
+   {
+	strcpy(sname,"");
+	enroll=0;
+	cgpa=0;
+
+   }
+   void setname(char n[],int en,float cg,char d[])
+   {
+       strcpy(sname,n);
+       enroll=en;
+       dep.setdep(d);
+       cgpa=cg;
+
+   }
+   float getstu()
+   {
+       return cgpa;
+   }
+
+    char* getdepart()
+    {
+
+	   return dep.getdep();
+    }
+    void topper(student *);
+ char *getname()
+{return sname;
+}
+
+ };
+  void student::topper(student o[20])
+  {
+
+	float temp;
+	int i,j;
+	float max=0;
+	for(i=0;i<5;i++)
+	{
+
+		if(o[i].cgpa>max)
+	       {
+		   max=o[i].cgpa;
+		   j=i;
+	       }
+	 }
+	 cout<<o[j].sname<<"\n"<<o[j].cgpa<<"\n"<<o[j].enroll<<"\n";
+   }
+
+
+template<class t>
+class faculty
+{
+     char fname[20];
+     t salary;
+     department dep;
+     public:
+     faculty()
+     {
+	  strcpy(fname,"");
+	  salary=0;
+      }
+      void setfac(char n[],t sal,char d[])
+      {
+	   strcpy(fname,n);
+	   salary=sal;
+	   dep.setdep(d);
+      }
+      t getsal()
+      {
+	    return salary;
+       }
+       char* getdepart()
+       {
+	    return dep.getdep();
+       }
+
+      char * getname()
+{return fname;
+}
+  void sort(faculty *a);
+  float average(faculty *a,int facno);
+ };
+
+ template<class t>
+
+void  faculty<t>::sort(faculty<t> *a)
+ {
+      int i,j,x;
+      int s[20];
+      for(i=0;i<3;i++)
+      {
+	x=0;
+	a[i].salary;
+	  for(j=i+1;j<3;j++)
+	  {
+	      if(a[i].salary<a[j].salary)
+	      {
+		  t t=a[i].salary;
+		  a[i].salary=a[j].salary;
+		  a[j].salary=t;
+		  x=j;
+	      }
+	  }
+	  s[i]=x;
+    }
+    for(i=0;i<3;i++)
+    {
+	cout<<a[s[i]].fname<<"\n"<<a[i].salary<<"\n";
+     }
+ }
+ template<class t>
+ float faculty<t>::average(faculty<t> *a,int facno)
+ {
+      t sum;
+      sum=0;
+      for(int i=0;i<facno;i++)
+      {
+	  sum=sum+a[i].salary;
+      }
+      return (float)sum/facno;
+ }
+
+
+  class webkiosk
+  {
+	student *s;
+	faculty<int> *f;
+	public:
+	webkiosk(){}
+	webkiosk(student s1)
+	{
+	  cout<<s1.getstu();
+	  cout<<endl;
+	  cout<<s1.getdepart();
+	  cout<<endl;
+       }
+	webkiosk(faculty<int> f1)
+	{
+	    cout<<f1.getsal();
+	    cout<<endl;
+	    cout<<f1.getdepart();
+	    cout<<endl;
+	}
+    };
+
+
+
+class infrastructure:public university //inheritance from university
+{
+   int tube,fan,benches,i,j ;
+    char *damage,*regd;
+   public:
+
+ virtual  void isdamage(char *s)
+   {strcpy(damage,s);
+     cout<<"complain registered and "<<s<<"will be ammended";
+
+    }
+
+     void isregd(char *a)
+       { strcpy(regd,a);
+	  cout<<a<<" will be supplied";
+	}
+};
+
+
+ class classroom:public infrastructure
+{
+	protected:
+     char *class_name,*damage;
+     public:
+
+     classroom(char *name)
+      {
+	  strcpy(class_name,name);
+      }
+      char* getclass()
+      {
+	return class_name;
+      }
+       virtual  void isdamage(char *s)
+   {strcpy(damage,s);
+     cout<<"complain registered and "<<s<<"will be ammended";
+
+    }
+
+
+
+};
+
+class tutorial:public classroom
+{
+    int seating_capacity;
+    public:
+      tutorial(char *n):classroom(n)
+       {seating_capacity=30;
+	}
+
+       int get_capacity()
+       {return seating_capacity;
+	}
+	friend char* tuteroom(tutorial );
+};
+
+  char* tuteroom(tutorial t)
+  {
+   return t.class_name;
+
+  }
+class lecturehall:public classroom
+{
+
+   int seating_capacity,projector;
+    public:
+      lecturehall(char *n,int p):classroom(n)
+       {seating_capacity=100;
+       projector=p;
+	}
+
+       int get_capacity()
+       {return seating_capacity;
+	}
+	int get_proj()
+	{return projector;
+	}
+	friend char* lectureroom(lecturehall);
+};
+char * lectureroom(lecturehall l)
+{
+ return l.class_name;
+}
+
+
+class lab:public classroom
+{
+    int seating_capacity,app;
+    public:
+      lab(char *n,int a):classroom(n)
+       {seating_capacity=40;
+	app=a;
+	}
+	int get_capacity()
+       {return seating_capacity;
+	}
+	int get_comp()
+	{return app;
+	}
+
+	void isdamage(char *k)
+	{
+	 cout<<"the instrument :"<<k<<"will be replaced soon ";
+	}
+};
+
+ class cafe:public infrastructure
+{int burger,patties,juice;
+     char *item;
+   public:
+   cafe()
+    {
+       burger=1;
+       patties=50;
+	juice=75;
+    }
+
+   void buy_item(char *a)
+    {  strcpy(item,a);
+	 if(strcmp(item,"burger")==0)
+	  {burger=burger-1;
+	    cout<<"please take your order of  burger";
+
+	   }
+	  else if((strcmp(item,"patties")==0))
+
+	 {
+	 patties=patties-1;
+	 cout<<"please take your order of  pattties";
+
+	 }
+	  else if(strcmp(item,"juice")==0)
+	  {juice=juice-1;
+	   cout<<"please take your order of  juice";
+	   }
+	    else
+	 {
+	    cout<<"sorry we dont have this item";
+	 }
+    }
+   void  get_availability()
+   {
+     cout<<"burgers left:"<<burger;
+     cout<<"patties left:"<<patties;
+     cout<<"juice left :"<<juice;
+
+   }
+
+  int get_availability(char *op)
+    {
+	 if(strcmp(op,"burger"))
+	 {
+	    return burger;
+	  }
+	  else if(strcmp(op,"patties"))
+	 {
+	    return patties;
+	  }
+	  else if(strcmp(op,"juice"))
+	 {
+	    return juice;
+	  }
+
+    }
+
+};
+
+class book
+{
+char *name;
+
+public:
+	book()
+	{
+
+
+
+	}
+	void setvalue(char *d)
+	{
+	 strcpy(name,d);
+	}
+	char* get_name()
+	{
+		return name;
+	}
+
+};
+
+
+
+class library:public infrastructure
+{
+   int bd1,bd2,bd3;
+   book *b1,*b2,*b3;
+  public:
+       library()
+	 { b1=new book;
+	   b2=new book;
+	   b3=new book;
+	   b1->setvalue("deital");
+	   b2->setvalue("hk");
+	   b3->setvalue("trigo");
+
+	   bd1=3;
+	   bd2=5;
+	   bd3=7;
+	 }
+
+
+     void issue(char *d)
+	 {
+	      if(strcmp(d,b1->get_name())==0)
+	       {bd1=bd1-1;
+		}
+	      else if(strcmp(d,b2->get_name())==0)
+	       {bd2=bd2-1;
+		}
+	       else if(strcmp(d,b3->get_name())==0)
+	       {bd3=bd3-1;
+		}
+	 }
+
+	void return1(char *d)
+	 {
+	      if(strcmp(d,b1->get_name())==0)
+	       {bd1=bd1+1;
+		}
+	      else if(strcmp(d,b2->get_name())==0)
+	       {bd2=bd2+1;
+		}
+	else if (strcmp(d,b3->get_name())==0)
+	       {bd3=bd3+1;
+		}
+	 }
+
+	 void showbook()
+	 {
+	 cout<<"deital "<<bd1;
+	 cout<<"hk dass:"<<bd2;
+	 cout<<"trigo"<<bd3;
+	 }
+
+
+	 ~library()
+	 {delete(b1);
+	  delete(b2);
+	  delete(b3);
+
+
+
+	 }
+};
+
+
+class hub
+{
+     char *hubname;
+      student *obj1;
+      faculty<t> *obj2;
+     int budget,exp;
+	 public:
+       hub(char *n,int b)
+	{
+	    strcpy(hubname,n);
+	    budget=b;
+	 }
+	 void setleader(char *n,int e,float c,char *d,char*fn,int id,char *fd)
+	 {
+	     student obj1;
+	     obj1.setname(n,e,c,d);
+	      faculty obj2(fn,id,fd);
+
+	  }
+
+	  void  showleader()
+	  {  obj1->getname();
+	      obj2->getname();
+	   }
+
+
+
+
+	void finance(int expenditure)
+	{
+	 cout<<"expenditure of event is"<<expenditure;
+	 exp=expenditure;
+
+
+	}
+
+	int get_budget()
+	{
+	budget=budget-exp;
+	return budget;
+	}
+
+};
+
+class basketball:public sports
+{
+  int won ,lost;
+  char *mentor;
+  public:
+
+     basketball(char *m)
+     {strcpy(mentor,m);
+     }
+
+  void organizematch(char *team1,char *team2)
+  {
+   int p1,p2;
+   cout<<"Enter the no of sessions won by team 1\n";
+   cin>>p1;
+   cout<<"Enter the no of sessions won by team 2\n";
+   cin>>p2;
+	if(p1>p2)
+	cout<<team1<<"  is winner\n";
+	else if (p1<p2)
+	cout<<team2<< " is winner\n";
+	else
+	cout<<"Match is deuce\n";
+  }
+
+
+
+
+};
+
+class tabletennis: public sports
+{
+
+
+char *mentor;
+  public:
+	 tabletennis(char*m)
+	{
+
+
+	strcpy(mentor,m);
+
+	}
+	void organizematch(char *team1,char *team2)
+  {
+   int p1,p2;
+   cout<<"Enter the no of sessions won by team 1\n";
+   cin>>p1;
+   cout<<"Enter the no of sessions won by team 2\n";
+   cin>>p2;
+	if(p1>p2)
+	cout<<team1<<"  is winner\n";
+	else if (p1<p2)
+	cout<<team2 <<"  is winner\n";
+	else
+	cout<<"Match is deuce\n";
+  }
+
+
+
+
+};
+
+
+  int main()
+  {
+/*       student o1[5];
+
+	o1[0].setname("anand",1310,7.6,"cse");
+	o1[1].setname("naman",1311,8.6,"cse");
+	o1[2].setname("gaurav",1312,7.8,"cse");
+	o1[3].setname("prateek",1313,7.6,"cse");
+	o1[4].setname("subham",1314,8.1,"cse");
+	for(int i=0;i<5;i++)
+	{
+
+	webkiosk o2(&o1[i]);
+
+	}
+	cout<<"press 1 to see the topper";
+	int n;
+	cin>>n;
+	if(n==1)
+	o1[0].topper(o1);
+     faculty<int> o3[10];
+	o3[0].setfac("Manoj bindal",20000,"cse");
+	o3[1].setfac("Ajit agarwal",30000,"cse");
+	o3[2].setfac("Sameer bansal",25000,"cse");
+	for(i=0;i<3;i++)
+	{
+	webkiosk o4(o3[i]);
+	}
+	cout<<"press 1 to sort";
+
+	cin>>n;
+	if(n==1)
+	o3[0].sort(o3);
+	/*
+	cout<<"press 1 for average salary";
+	cin>>n;
+	if(n==1)
+	{
+
+	cout<<"enter no. of faculty :";
+	int facno;
+	cin>>facno;
+
+	try
+	{
+	    o3[0].average(o3,facno);
+	    throw 1;
+	 }
+	 catch(...)
+	 {
+	    cout<<"please insert valid  no. of faculty";
+	 }
+
+
+
+*/     /*
+
+	cafe o2;
+	cout<<"enter your choice\n1)burger\n2)patties\n3)juice\n";
+	int m;
+	int k;
+	switch (m)
+	{
+	 case 1:
+	     k=o2.get_availability("burger");
+	     try{
+		 if(k==0)
+		 throw k;
+		 else
+		 o2.buy_item("burger");
+	      }
+	      catch(int a)
+	      {
+		    cout<<"out of stock";
+	       }
+	       break;
+
+	case 2:
+	try{
+	      k=o2.get_availability("patties");
+
+
+		 if(k==0)
+		 throw k;
+		 else
+		 o2.buy_item("patties");
+	      }
+	      catch(...)
+	      {
+		    cout<<"out of stock";
+	       }
+	       break;
+	    case 3:
+		 k=o2.get_availability("juice");
+	     try
+	     {
+		 if(k==0)
+		 throw k;
+		 else
+		 o2.buy_item("juice");
+	      }
+	      catch(int a)
+	      {
+		    cout<<"out of stock";
+	       }
+
+	       break;
+	     }
+	 */
+
+      /*	 basketball obj("mohan lal");
+	 obj.organizematch("team1","team2");
+      */
+
+    /*  hub obj("radiance",1000);
+      obj.setleader("subham",1310,3.4,"cse","chetna",21,"ece");
+      obj.showleader();
+      obj.finance(200);
+      obj.get_budget();
+
+    */
+    /*
+    library obj;
+    obj.showbook();
+    obj.return1("deital");
+    obj.showbook();
+
+    */
+    lab obj("computer",12);
+    obj.isdamage("monitor");
+    getch();
+	return 0;
+
+   }
+
